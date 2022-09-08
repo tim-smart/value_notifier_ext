@@ -42,18 +42,26 @@ class ValueNotifierCollection<A> extends LazyChangeNotifier
 
   ValueNotifierCollection<A> add(ValueNotifier<A> notifier) {
     _notifiers.add(notifier);
+    return _register(notifier);
+  }
+
+  ValueNotifierCollection<A> insert(int index, ValueNotifier<A> notifier) {
+    _notifiers.insert(index, notifier);
+    return _register(notifier);
+  }
+
+  ValueNotifierCollection<A> remove(ValueNotifier<A> notifier) {
+    _notifiers.remove(notifier);
 
     if (hasListeners) {
-      notifier.addListener(notifyListeners);
+      notifier.removeListener(notifyListeners);
       notifyListeners();
     }
 
     return this;
   }
 
-  ValueNotifierCollection<A> prepend(ValueNotifier<A> notifier) {
-    _notifiers.insert(0, notifier);
-
+  ValueNotifierCollection<A> _register(ValueNotifier<A> notifier) {
     if (hasListeners) {
       notifier.addListener(notifyListeners);
       notifyListeners();

@@ -23,6 +23,9 @@ abstract class LazyChangeNotifier extends ChangeNotifier {
     }
   }
 
+  @protected
   void resume();
+
+  @protected
   void pause();
 }

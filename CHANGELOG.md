@@ -1,3 +1,7 @@
+## 0.0.4
+
+- Pause LazyChangeNotifier on dispose
+
 ## 0.0.3
 
 - Remove `prepend` from collection

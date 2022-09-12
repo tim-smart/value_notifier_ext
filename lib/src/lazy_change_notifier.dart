@@ -23,6 +23,15 @@ abstract class LazyChangeNotifier extends ChangeNotifier {
     }
   }
 
+  @override
+  void dispose() {
+    if (_running) {
+      _running = false;
+      pause();
+    }
+    super.dispose();
+  }
+
   @protected
   void resume();
 

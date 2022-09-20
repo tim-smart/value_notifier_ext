@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:value_notifier_ext/value_notifier_ext.dart';
 
 class ValueNotifierCollection<A> extends LazyChangeNotifier
-    implements ValueListenable<Iterable<A>> {
+    implements ValueListenable<List<ValueNotifier<A>>> {
   ValueNotifierCollection(Iterable<ValueNotifier<A>> notifiers)
       : _notifiers = notifiers.toList();
 
@@ -14,17 +14,16 @@ class ValueNotifierCollection<A> extends LazyChangeNotifier
   static ValueNotifier<A> Function(ValueNotifierCollection<A> coll) Function(
       Id id) finder<A, Id>(
           Id Function(A a) f) =>
-      (id) => (coll) => coll.notifiers.firstWhere((n) => f(n.value) == id);
+      (id) => (coll) => coll._notifiers.firstWhere((n) => f(n.value) == id);
 
   final List<ValueNotifier<A>> _notifiers;
-  Iterable<ValueNotifier<A>> get notifiers => _notifiers;
 
   int get length => _notifiers.length;
 
   operator [](int index) => _notifiers[index];
 
   @override
-  Iterable<A> get value => _notifiers.map((n) => n.value);
+  List<ValueNotifier<A>> get value => _notifiers;
 
   @override
   void resume() {

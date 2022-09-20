@@ -1,3 +1,7 @@
+## 0.0.6
+
+- Directly return notifiers from collection
+
 ## 0.0.5
 
 - Return void from collection methods

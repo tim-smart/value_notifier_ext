@@ -1,3 +1,7 @@
+## 0.0.5
+
+- Return void from collection methods
+
 ## 0.0.4
 
 - Pause LazyChangeNotifier on dispose

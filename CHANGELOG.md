@@ -1,3 +1,7 @@
+## 0.0.7
+
+- Add equality check to `map`
+
 ## 0.0.6
 
 - Directly return notifiers from collection

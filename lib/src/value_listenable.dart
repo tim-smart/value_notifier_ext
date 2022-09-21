@@ -20,17 +20,31 @@ class MapValueNotifier<A, B> extends LazyChangeNotifier
 
   final ValueListenable<A> _parent;
   final B Function(A a) _transform;
+  B? _previousValue;
 
   @override
-  B get value => _transform(_parent.value);
+  B get value => _previousValue ?? _transform(_parent.value);
 
   @override
   void resume() {
-    _parent.addListener(notifyListeners);
+    _previousValue = value;
+    _parent.addListener(_maybeNotifyListeners);
   }
 
   @override
   void pause() {
-    _parent.removeListener(notifyListeners);
+    _parent.removeListener(_maybeNotifyListeners);
+    _previousValue = null;
+  }
+
+  void _maybeNotifyListeners() {
+    final newValue = _transform(_parent.value);
+
+    if (_previousValue == newValue) {
+      return;
+    }
+
+    _previousValue = newValue;
+    notifyListeners();
   }
 }

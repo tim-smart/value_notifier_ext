@@ -1,3 +1,7 @@
+## 0.0.7
+
+- Add `stream` to ValueListenable ext
+
 ## 0.0.6
 
 - Directly return notifiers from collection

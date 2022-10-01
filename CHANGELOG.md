@@ -1,3 +1,7 @@
+## 0.0.9
+
+- Add equality to collection
+
 ## 0.0.8
 
 - Add `stream` to ValueListenable ext

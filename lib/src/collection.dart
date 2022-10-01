@@ -1,26 +1,40 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:value_notifier_ext/value_notifier_ext.dart';
 
 class ValueNotifierCollection<A> extends LazyChangeNotifier
     implements ValueListenable<List<ValueNotifier<A>>> {
-  ValueNotifierCollection(Iterable<ValueNotifier<A>> notifiers)
-      : _notifiers = notifiers.toList();
+  ValueNotifierCollection(
+    Iterable<ValueNotifier<A>> notifiers, {
+    int? hashCodeOverride,
+  })  : _notifiers = notifiers.toList(),
+        _hashCodeOverride = hashCodeOverride;
 
   factory ValueNotifierCollection.seed(Iterable<A> iterable) =>
-      ValueNotifierCollection(iterable.map(ValueNotifier.new));
+      ValueNotifierCollection(
+        iterable.map(ValueNotifier.new),
+        hashCodeOverride: const ListEquality().hash(iterable.toList()),
+      );
 
-  factory ValueNotifierCollection.empty() => ValueNotifierCollection(const []);
-
-  static ValueNotifier<A> Function(ValueNotifierCollection<A> coll) Function(
-      Id id) finder<A, Id>(
-          Id Function(A a) f) =>
-      (id) => (coll) => coll._notifiers.firstWhere((n) => f(n.value) == id);
+  factory ValueNotifierCollection.empty() => ValueNotifierCollection(
+        const [],
+        hashCodeOverride: const ListEquality().hash(const []),
+      );
 
   final List<ValueNotifier<A>> _notifiers;
 
   int get length => _notifiers.length;
 
   operator [](int index) => _notifiers[index];
+
+  final int? _hashCodeOverride;
+
+  @override
+  int get hashCode => _hashCodeOverride ?? super.hashCode;
+
+  @override
+  operator ==(other) =>
+      other is ValueNotifierCollection<A> && other.hashCode == hashCode;
 
   @override
   List<ValueNotifier<A>> get value => _notifiers;

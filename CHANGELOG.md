@@ -1,6 +1,10 @@
-## 0.0.7
+## 0.0.8
 
 - Add `stream` to ValueListenable ext
+
+## 0.0.7
+
+- Add equality check to `map`
 
 ## 0.0.6
 

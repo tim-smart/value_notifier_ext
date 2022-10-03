@@ -6,12 +6,20 @@ import 'package:value_notifier_ext/value_notifier_ext.dart';
 extension ValueListenableExt<A> on ValueListenable<A> {
   ValueListenable<B> map<B>(B Function(A a) f) => MapValueNotifier(this, f);
 
-  VoidCallback listen(void Function(A a) onValue) {
+  VoidCallback listen(
+    void Function(A a) onValue, {
+    bool fireImmediately = false,
+  }) {
     void listenHandler() {
       onValue(value);
     }
 
     addListener(listenHandler);
+
+    if (fireImmediately) {
+      onValue(value);
+    }
+
     return () => removeListener(listenHandler);
   }
 

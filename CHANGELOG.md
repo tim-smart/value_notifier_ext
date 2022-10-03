@@ -1,3 +1,7 @@
+## 0.0.10
+
+- Add fireImmediately to listen
+
 ## 0.0.9
 
 - Add equality to collection

@@ -1,6 +1,6 @@
 name: value_notifier_ext
 description: Helpful utilities for Flutter's ValueNotifier
-version: 0.0.9
+version: 0.0.10
 homepage: https://github.com/tim-smart/value_notifier_ext
 
 environment:
